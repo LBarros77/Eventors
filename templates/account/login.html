@@ -1,0 +1,78 @@
+{% extends "base-public.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  <section class="panel mt-30">
+    <header class="panel-heading">
+      <h2 class="panel-title">Acesso</h2>
+  </header>
+    <div class="panel-body">
+      <div class="form-group mb-lg pd-20">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger">
+  										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  										<strong>{{ error|escape }}</strong>
+  								</div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="form-group mb-lg">
+          <label>Usuário</label>
+          <div class="input-group input-group-icon">
+            <input id="id_login" name="login" type="text" class="form-control input-lg" />
+            <span class="input-group-addon">
+              <span class="icon icon-lg">
+                <i class="fa fa-user"></i>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group mb-lg">
+          <div class="clearfix">
+            <label class="pull-left">Senha</label>
+            <a href="{% url 'account_reset_password' %}" class="pull-right">Esqueceu a senha?</a>
+          </div>
+          <div class="input-group input-group-icon">
+            <input id="id_password" name="password" type="password" class="form-control input-lg" />
+            <span class="input-group-addon">
+              <span class="icon icon-lg">
+                <i class="fa fa-lock"></i>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="checkbox-custom checkbox-default">
+              <input id="id_remember" name="remember" type="checkbox"/>
+              <label for="id_remember">Lembrar de você?</label>
+            </div>
+          </div>
+          <div class="col-sm-4 text-right">
+            <button type="submit" class="btn btn-primary hidden-xs">Entrar</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Entrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="assets/javascripts/ui-elements/examples.notifications.js"></script>
+{% endblock scripts %}

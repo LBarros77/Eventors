@@ -1,0 +1,263 @@
+{% load static i18n %}
+<!doctype html>
+<html class="fixed sidebar-left-collapsed">
+
+<head>
+  <!-- Basic -->
+  <meta charset="UTF-8">
+  <title>EXPOCIGRA</title>
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Web Fonts  -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet"
+    type="text/css">
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css' %}" />
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{% static 'assets/stylesheets/theme.css' %}" />
+  <!-- Skin CSS -->
+  <link rel="stylesheet" href="{% static 'assets/stylesheets/skins/default.css' %}" />
+
+  {% block css %}
+
+  {% endblock css %}
+</head>
+
+<body>
+  <section class="body">
+    <!-- start: header -->
+    <header class="header">
+      <div class="logo-container float-left">
+        <a href="/" class="logo">
+		<img src="{% static 'assets/images/logo-light.png' %}" width="75" height="35" alt="Porto Admin." /> 
+        </a>
+        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html"
+          data-fire-event="sidebar-left-opened">
+          <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+      </div>
+      <div class="header-right">
+      <!--  <ul class="notifications">
+          <li class="">
+            <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bell"></i>
+              <span class="badge">2</span>
+            </a>
+
+            <div class="dropdown-menu notification-menu">
+              <div class="notification-title">
+                <span class="pull-right label label-default">2</span>
+                Notificações
+              </div>
+              <div class="content">
+                <ul>
+                  <li>
+                    <a href="#" class="clearfix">
+                      <div class="image">
+                        <i class="fa fa-group bg-success"></i>
+                      </div>
+                      <span class="title">Solicitação de inscrição</span>
+                      <span class="message">Evento xxxx</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="clearfix">
+                      <div class="image">
+                        <i class="fa fa-lock bg-success"></i>
+                      </div>
+                      <span class="title">Cadastro empresa</span>
+                      <span class="message">Nova empresa cadastrada</span>
+                    </a>
+                  </li>
+                </ul>
+                <hr>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <span class="separator"></span>
+      -->
+        <div id="userbox" class="userbox pull-right">
+          <a href="#" data-toggle="dropdown">
+            <figure class="profile-picture">
+              <img src="{% static 'assets/images/!logged-user.jpg' %}" class="img-circle"
+                data-lock-picture="assets/images/!logged-user.jpg" />
+            </figure>
+            <div class="profile-info">
+              <span class="name">{{ request.user.username }}</span>
+            </div>
+            <i class="fa custom-caret"></i>
+          </a>
+
+          <div class="dropdown-menu">
+            <ul class="list-unstyled">
+              <li class="divider"></li>
+              <li>
+                <a role="menuitem" tabindex="-1" href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i>Sair
+                  do sistema</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+
+    </header>
+    <!-- end: header -->
+
+    <div class="inner-wrapper">
+      <!-- start: sidebar -->
+      <aside id="sidebar-left" class="sidebar-left">
+
+        <div class="sidebar-header">
+          <div class="sidebar-title">
+            Menu de Navegação
+          </div>
+          <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html"
+            data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+          </div>
+        </div>
+
+        <div class="nano">
+          <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+
+              <ul class="nav nav-main">
+                {% if request.user.is_authenticated %}
+                <li>
+                  <a href="{% url 'company_list' %}">
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                    <span>Empresas</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="{% url 'event_list' %}">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span>Eventos</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="{% url 'question_list' %}">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                    <span>Perguntas</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="{% url 'question_approved' %}">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <span>Perguntas Aprovadas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'raffle_event_list' %}">
+                    <i class="fa fa-gift" aria-hidden="true"></i>
+                    <span>Sorteios</span>
+                  </a>
+                </li>
+
+                <li style="
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;">
+                  <a href="{% url 'account_logout' %}">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <span>Sair do sistema</span>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+
+            <script>
+              // Maintain Scroll Position
+              if (typeof localStorage !== 'undefined') {
+                if (localStorage.getItem('sidebar-left-position') !== null) {
+                  var initialPosition = localStorage.getItem('sidebar-left-position'),
+                    sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                  sidebarLeft.scrollTop = initialPosition;
+                }
+              }
+            </script>
+
+          </div>
+        </div>
+
+      </aside>
+      <!-- end: sidebar -->
+      <div class="main-tittle">
+
+        {% block title %} {% endblock title %}
+
+      </div>
+      <section role="main" class="content-body">
+
+
+
+        <!-- start: page -->
+
+        {% block content %} {% endblock content %}
+
+        <!-- end: page -->
+
+      </section>
+
+
+  </section>
+
+  <!-- Vendor -->
+  <script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
+  <script src="{% static 'assets/vendor/modernizr/modernizr.js' %}"></script>
+  <script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js' %}"></script>
+  <script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'assets/vendor/magnific-popup/jquery.magnific-popup.js' %}"></script>
+  <script src="{% static 'assets/vendor/jquery-placeholder/jquery-placeholder.js' %}"></script>
+
+
+
+  <!-- Theme Base, Components and Settings -->
+  <script src="{% static 'assets/javascripts/theme.js' %}"></script>
+  
+  <!-- Theme Initialization Files -->
+  <script src="{% static 'assets/javascripts/theme.init.js' %}"></script>
+  <!-- Head Libs -->
+  <!-- <script src="{% static 'assets/vendor/jquery-maskedinput/jquery.maskedinput.js' %}"></script> -->
+  <script src="{% static 'assets/vendor/jquery-mask-min/jquery.mask.min.js' %}"></script>
+  {% block scripts %} {% endblock scripts %}
+  <script>
+    $(document).ready(function () {
+      $("#id_cpf").mask("999.999.999-99");
+      $("#id_cnpj").mask("99.999.999/9999-99");
+      $("#id_first_hour").mask("99:99");
+      $("#id_last_hour").mask("99:99");
+      $("#id_cep").mask("99999-999");
+
+    });
+
+    var SPMaskBehavior = function (val) {
+      return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+      spOptions = {
+        onKeyPress: function (val, e, field, options) {
+          field.mask(SPMaskBehavior.apply({}, arguments), options);
+        }
+      };
+
+    $('#id_phone').mask(SPMaskBehavior, spOptions);
+  </script>
+  
+  </body>
+  
+  </html>

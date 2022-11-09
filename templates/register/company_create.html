@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'register_company_create' event.id %}" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Submit</button>
+</form>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'assets/vendor/jquery-maskedinput/jquery.maskedinput.js' %}"></script>
+{% endblock scripts %}

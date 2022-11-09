@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.cs" />
+<style>
+	.custom-table-head {
+		background-color: transparent;
+	}
+
+	.custom-tr {
+		color: #777
+	}
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="col-md-12 div-center">
+	<section class="panel">
+		<div class="btn-holder">
+			<a href="{% url 'person_create' company.id %}">
+				<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary pull-right">
+					<i class="fa fa-plus"></i>
+					Funcionário
+				</button>
+			</a>
+		</div>
+		<div class="clear-right"></div>
+		<header class="panel-heading">
+			<h2 class="panel-title">{{company.corporate_name}}</h2>
+		</header>
+		<div class="panel-body">
+			{{company.get_segmentation_display}}
+		</div>
+	</section>
+	<section class="panel">
+		<header class="panel-heading">
+			<h2 class="panel-title">Participantes</h2>
+		</header>
+		<div class="panel-body">
+			<table id="example" class="display table table-no-more table-striped mb-none" style="width:100%">
+				<thead class="custom-table-head">
+						<tr class="custom-tr">
+						<th class="text-left">Nome Completo</th>
+						<th class="text-left">E-mail</th>
+						<th class="text-left">CPF</th>
+						<th class="text-left">Cargo</th>
+						<th class="text-left">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for person in persons %}
+					<tr>
+						<td data-title="Nome Completo" class="text-left">{{person.name}}</td>
+						<td data-title="E-mail" class="text-left">{{person.email}}</td>
+						<td data-title="CPF" class="text-left">{{person.cpf}}</td>
+						<td data-title="Cargo" class="text-left">{{person.role}}</td>
+						<td>							
+							<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Editar">
+								<a href="{% url 'person_update' person.id %}"
+									class="btn btn-info btn-sm waves-effect waves-light"><i
+										class="fa fa-pencil"></i></a>
+							</span>
+							<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Excluir">
+									<a class="btn-sm waves-effect waves-light  modal-basic btn btn-danger" href="#modalWarning-{{ person.id }}">
+										<i class="fa fa-trash"></i>
+								</a>
+							</span>			
+							<div id="modalWarning-{{ person.id }}" class="modal-header-color modal-block modal-block-danger mfp-hide">
+								<section class="panel">
+									<header class="panel-heading">
+										<h2 class="panel-title">Cuidado!</h2>
+									</header>
+									<div class="panel-body">
+										<div class="modal-wrapper">
+											<div class="modal-icon">
+												<i class="fa fa-trash"></i>
+											</div>
+											<div class="modal-text">
+												<h4>Exluir <span class="f-bold">{{ person.name }}</span>?</h4>
+												<p>Uma vez exluído, todos os dados serão perdidos!</p>
+											</div>
+										</div>
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-12 text-right">
+												<a href="{% url 'person_delete' person.id %}" type class="btn btn-danger">OK</a>
+												<button class="btn btn-defaut modal-dismiss">Cancelar</button>
+											</div>
+										</div>
+									</footer>
+								</section>
+							</div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sProcessing": "A processar...",
+                "sLengthMenu": "Mostrar _MENU_ registos",
+                "sZeroRecords": "Não foram encontrados resultados",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+                "sInfoEmpty": "Mostrando de 0 até 0 de 0 registos",
+                "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+                "sInfoPostFix": "",
+                "sSearch": "Procurar:",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sPrevious": "Anterior",
+                    "sNext": "Seguinte",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            },
+            "lengthChange": false
+        });
+    });
+</script>
+<script src="{% static 'assets/vendor/magnific-popup/jquery.magnific-popup.js' %}"></script>
+<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap-confirmation/bootstrap-confirmation.js' %}"></script>
+{% endblock scripts %}
+

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+  <section class="panel">
+    <header class="panel-heading">
+      <h2 class="panel-title">Pesquisar empresa</h2>
+    </header>
+    <div class="panel-body">
+      <form method="post">
+        {% csrf_token %}
+        <label>Insira o CNPJ da sua empresa:</label>
+        <div class="input-group input-group-icon">
+          <input id="id_cnpj" placeholder="Apenas Números" name="cnpj" type="text" class="form-control input-lg" />
+          {{ form.cnpj.errors }}
+        </div>
+        <div class="table-responsive mt-20">
+          <table class="table table-bordered table-striped table-condensed mb-none">
+            <tbody>
+              {% if cfilter.qs.count  != num_results %}
+                {% for company in  cfilter.qs %}
+              <tr> <!-- inicio da repetição -->
+                <td>
+                  <a class="company-link" href="{% url 'person_create' company.id %}">
+                    {{company.corporate_name}}
+                  </a>
+                </td>
+              </tr> <!-- fim da repetição -->
+              {% endfor %}
+            {% endif %}
+            </tbody>
+          </table>
+        </div>
+        {% if cfilter.qs.count == 0 %}
+        <a href="{% url 'company_create' %}" class="btn btn-primary btn-block btn-lg mt-lg">
+          Cadastrar empresa
+        </a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">
+          Pesquisar
+        </button>
+      </form>
+    </div>
+  </section>
+{% endblock content %}

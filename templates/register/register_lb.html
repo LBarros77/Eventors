@@ -1,0 +1,99 @@
+{% extends 'base-public.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<style>
+    img {
+        width: 10%;
+    }
+    .mt-3 {margin-top: 1rem;}
+    .d-flex {
+        display: flex;
+    }
+    .align-items-start {
+        display: flex;
+        align-items: flex-start;
+    }
+</style>
+<!-- {% bootstrap_messages %} -->
+<form method="POST" action="{% url 'r_company_search' event.id %}" id="form_register" autocomplete="off">
+    {% csrf_token %}
+    <section class="panel mt-30">
+        <div class="logo-personalizada">
+            <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+        </div>
+        <div class="msg-error"></div>
+        <header class="panel-heading bg-primary">
+            <h2 class="panel-title">{{event.title}} - {{ event.first_date | date:"d/m/Y" }}</h2>
+        </header>
+        <div class="panel-body">
+            <div class="form-group mb-lg pd-20">
+                <label>Insira o CNPJ:</label>
+                <div class="input-group input-group-icon">
+                    <input type="text" name='cnpj' class="form-control" placeholder="Apenas números" id="id_cnpj">
+                    {{ form.cnpj.errors }}
+                </div>
+                <div class="form-group form-check align-items-start mt-3">
+                    <!-- <input type="checkbox" class="form-check-input mr-3" id="term_check" required style="margin-right:.5rem"> -->
+                    {{ form.term_check }}
+                    <label class="form-check-label" for="term_check">
+                        Seus dados podem ser compartilhados com alguns setores do Evento para melhorar a sua experiência 
+                        e facilitar o nosso trabalho.
+                    </label>
+                </div>
+                <div class="table-responsive mt-20">
+                    <table class="table table-bordered table-striped table-condensed mb-none">
+                        <tbody>
+                            {% if option %}
+                            {% for company in cfilter.qs %}
+                            <tr>
+                                <td>
+                                <span class=" mb-xs mt-xs mr-xs company-link pull-left">
+                                    {{company.corporate_name}}
+                                </span>
+                                <a class="mb-xs mt-xs mr-xs btn btn-sm btn-primary pull-right"
+                                    href="{% url 'r_register' event.id company.id %}">
+                                    Selecionar
+                                </a>
+                                </td>
+                                <div class="clear-right"></div>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">
+                    Pesquisar
+                </button>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-block btn-lg mt-lg" data-toggle="modal" data-target="#exampleModal">
+                    Não possuo CNPJ
+                </button>
+            </div>
+        </div>
+    </section>
+</form>
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title" id="exampleModalLabel">{{event.title}} - {{ event.first_date | date:"d/m/Y" }}</h5>
+                <button type="button" class="close" style="margin-left: 70%;" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seu CNPJ é muito importante, Deseja seguir sem informar?
+            </div>
+            <div class="modal-footer d-flex flex-wrap-reverse mx-auto">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Informar</button>
+                <a href="{% url 'r_person_create' event.id %}" class="btn btn-danger">Seguir</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

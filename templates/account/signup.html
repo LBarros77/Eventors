@@ -1,0 +1,72 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+<h1>{% trans "Sign Up" %}</h1>
+
+<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  <div class="form-group mb-lg">
+    <label>Nome de usuário</label>
+    <div class="input-group input-group-icon">
+      {{ form.username|attr:"class: form-control input-lg" }}
+      <span class="input-group-addon">
+        <span class="icon icon-lg">
+          <i class="fa fa-user"></i>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group mb-lg">
+    <label>Endereço de e-mail</label>
+    <div class="input-group input-group-icon">
+      {{ form.email|attr:"class: form-control input-lg" }}
+      <span class="input-group-addon">
+        <span class="icon icon-lg">
+          <i class="fa fa-at"></i>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group mb-lg">
+    <div class="clearfix">
+      <label class="pull-left">Senha</label>
+    </div>
+    <div class="input-group input-group-icon">
+      {{ form.password1|attr:"class: form-control input-lg" }}
+      <span class="input-group-addon">
+        <span class="icon icon-lg">
+          <i class="fa fa-lock"></i>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group mb-lg">
+    <div class="clearfix">
+      <label class="pull-left">Senha(Novamente)</label>
+    </div>
+    <div class="input-group input-group-icon">
+      {{ form.password2|attr:"class: form-control input-lg" }}
+      <span class="input-group-addon">
+        <span class="icon icon-lg">
+          <i class="fa fa-lock"></i>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4 text-right" style="width: 100%;">
+      <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">Cadastrar</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

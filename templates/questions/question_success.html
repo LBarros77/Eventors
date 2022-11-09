@@ -1,0 +1,43 @@
+{% extends "base-public.html" %}
+{% load static i18n %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+
+
+<style>
+  .logo-personalizada {
+    width: 50%;
+    margin: auto;
+    margin-bottom: auto;
+    display: block;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <img src="{% static 'assets/images/logo.png' %}" alt="EXPOCIGRA" />
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">Comentário enviado!</h2>
+    </header>
+    <div class="panel-body">
+      <h3>Seu comentário foi enviado para aprovação.</h3>
+      <div class="col-sm-12 text-right">
+          <a href="{% url 'question_create' event.id %}" class="btn btn-primary btn-block btn-lg mt-lg">Novo
+            comentário</a>
+        </div>
+    </div>
+  </section>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="assets/javascripts/ui-elements/examples.notifications.js"></script>
+{% endblock scripts %}

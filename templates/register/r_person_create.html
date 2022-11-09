@@ -1,0 +1,159 @@
+{% extends 'base-public.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<form action="{% url 'r_person_create' event.id %}" method="POST" id="form1" class="form-horizontal">
+  {% csrf_token %}
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <a href="{% url 'r_company_search' event.id %}">
+        <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+      </a>
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">Dados Participante</h2>
+    </header>
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">CPF</label>
+        <div class="col-sm-12">
+          <input type="text" name="cpf" maxlength="14" class="form-control" placeholder="Apenas números." value="{{ cpf }}" id="id_cpf" required>
+          {{ form.cpf.errors }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">Nome completo</label>
+        <div class="col-sm-12">
+          {{ form.name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">Nome completo</label>
+        <div class="col-sm-12">
+          {{ form.name_cracha }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">E-mail</label>
+        <div class="col-sm-12">
+          {{ form.email }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">Telefone</label>
+        <div class="col-sm-12">
+          {{ form.phone }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-sm-12 control-label">Cargo</label>
+        <div class="col-sm-12">
+          {{ form.role }}
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="panel-body">
+      <label class="col-sm-12 control-label">Deseja receber informações e novidades sobre os eventos EXPOSIGRA?</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+          Default radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <label class="form-check-label" for="exampleRadios2">
+          Second default radio
+        </label>
+      </div>
+    </div> -->
+    
+    <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">Deseja receber informações e novidades sobre os eventos EXPOSIGRA?</label>
+          <div class="col-md-6">
+              {{ form.opt_in }}
+            </div>
+        </div>
+      </div>
+    <footer class="panel-footer">
+      <button class="btn btn-primary">Cadastrar </button>
+    </footer>
+  </section>
+</form>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js' %}"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    function limpa_formulário_cep() {
+      $("#id_public_place").val(" ");
+      $("#id_neighborhood").val(" ");
+      $("#id_city").val(" ");
+      $("#id_state").val(" ");
+    }
+    $("#id_cep").blur(function () {
+      //Nova variável "cep" somente com dígitos.
+      var cep = $(this).val().replace(/\D/g, '');
+      //Verifica se campo cep possui valor informado.
+      if (cep != "") {
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
+        //Valida o formato do CEP.
+        if (validacep.test(cep)) {
+          //Preenche os campos com "..." enquanto consulta webservice.
+          $("#id_public_place").val("...");
+          $("#id_neighborhood").val("...");
+          $("#id_city").val("...");
+          $("#id_state").val("...");
+          //Consulta o webservice viacep.com.br/
+          $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+            if (!("erro" in dados)) {
+              //Atualiza os campos com os valores da consulta.
+              $("#id_public_place").val(dados.logradouro);
+              $("#id_neighborhood").val(dados.bairro);
+              $("#id_city").val(dados.localidade);
+              $("#id_state").val(dados.uf);
+            } //end if.
+            else {
+              //CEP pesquisado não foi encontrado.
+              limpa_formulário_cep();
+              alert("CEP não encontrado.");
+            }
+          });
+        } //end if.
+        else {
+          //cep é inválido.
+          limpa_formulário_cep();
+          alert("Formato de CEP inválido.");
+        }
+      } //end if.
+      else {
+        //cep sem valor, limpa formulário.
+        limpa_formulário_cep();
+      }
+    });
+  });
+</script>
+{% endblock scripts %}

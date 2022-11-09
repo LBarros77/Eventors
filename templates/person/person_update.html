@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'person_update' person.id %}" method="POST" id="form1" class="form-horizontal">
+    {% csrf_token %}
+    <section class="panel">
+      <header class="panel-heading">
+        <h2 class="panel-title">Editar participante</h2>
+      </header>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">Nome completo</label>
+          <div class="col-sm-12">
+              {{ form.name }}
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">CPF</label>
+          <div class="col-sm-12">
+              {{ form.cpf }}
+              {{ form.cpf.errors }}
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">E-mail</label>
+          <div class="col-sm-12">
+              {{ form.email }}
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">Telefone</label>
+          <div class="col-sm-12">
+              {{ form.phone }}
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-sm-12 control-label">Cargo</label>
+          <div class="col-sm-12">
+              {{ form.role }}
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+          <div class="form-group">
+            <label class="col-sm-12 control-label">Deseja receber informações e novidades sobre os eventos UMV?</label>
+            <div class="col-md-6">
+                {{ form.opt_in | attr:'class: form-control'}}
+              </div>
+          </div>
+        </div>
+      <footer class="panel-footer">
+        <button class="btn btn-primary">Atualizar</button>
+      </footer>
+    </section>
+</form>
+{% endblock content %}

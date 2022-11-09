@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<form method="GET" action="{% url 'company_search' event.id %}">
+  {% csrf_token %}
+  <section class="panel mt-30">
+    <header class="panel-heading">
+      <h2 class="panel-title">Pesquisar empresa</h2>
+    </header>
+    <div class="panel-body">
+        <form method="GET">
+            <label>Insira o CNPJ da empresa:</label>
+            <div class="input-group mb-md">
+                {{ cfilter.form.cnpj|attr:'class: form-control' }}
+                {{ form.cnpj.errors }}
+                <div class="input-group-btn">
+                    <button tabindex="-1" class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+      <div class="form-group mb-lg pd-20">        
+        <div class="table-responsive mt-20">
+          <table class="table table-bordered table-striped table-condensed mb-none">
+            <tbody>              
+              {% if cfilter.qs.count != num_results %}
+              {% for company in cfilter.qs %}
+              <tr>
+                <td>
+                  <span class=" mb-xs mt-xs mr-xs company-link pull-left">
+                    {{company.corporate_name}}
+                  </span>
+                  <a class="mb-xs mt-xs mr-xs btn btn-sm btn-primary pull-right" href="{% url 'register' event.id company.id %}">
+                      Selecionar
+                  </a>
+                </td>
+                <div class="clear-right"></div>
+              </tr>
+              {% endfor %}
+              {% endif %}                
+            </tbody>
+          </table>
+        </div>
+        {% if cfilter.qs.count == 0 %}
+           <div class="alert-box failure">Não houve resultados para sua pesquisa.</div>
+           <a href="{% url 'r_company_create' event.id %}" class="btn btn-primary btn-block btn-lg mt-lg">
+             Cadastrar empresa
+           </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  // $("#id_cnpj").mask("99.999.999/9999-99")
+  $("#id_cnpj").blur(function () {
+    console.log($("#id_cnpj").val());
+  })
+</script>
+{% endblock scripts %}
+

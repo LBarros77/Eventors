@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load utils %}
+{% block content %}
+
+<!-- start: page -->
+<div class="btn-holder">
+    <a href="{% url 'survey_create' event.id %}">
+      <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">
+        <i class="fa fa-plus"></i>
+        Enquete
+      </button>
+    </a>
+    <button id="portletRefresh" type="button" class="btn btn-primary btn-sm waves-effect waves-light"><i class="fa fa-refresh"></i> Refresh</button>
+</div>
+<div class="clear-right"></div>
+
+<div class="row">
+{% for survey in surveys %}
+    <div class="col-md-4" data-plugin-portlet id="portlet-1">
+        <section class="panel-featured panel-featured-primary" id="panel-3" data-portlet-item>
+            <header class="panel-heading portlet-handler">
+                <h2 class="panel-title">Enquete #{{survey.id}}<span class="pull-right" style="font-size: 10px;">Total: {% get_all_answers survey=survey %}</span></h2>
+            </header>
+            <div class="panel-body">
+                <h3 class="f-bold">{{survey.tittle}}</h3>
+                <ul>
+                    {% for alternative in survey|get_alternatives %}
+                    <li>
+                        <p class="f-1rem">{{ alternative.desc }} - {% get_results alternative=alternative survey=survey %}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'alternative_create' survey.id %}" class="btn btn-primary btn-sm waves-effect waves-light" style="margin-left: 5px;"><i class="fa fa-plus"></i> Alternativa</a>
+                <a href="#" onclick="window.open('https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=localhost:8000/answer/{{survey.id}}', 'popup', 'width=400,height=400'); return false;" class="btn btn-primary btn-sm waves-effect waves-light">
+                  <i class="fa fa-info"></i>
+                  Enquete
+                </a>
+            </div>
+
+        </section>
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+
+    <!-- Specific Page Vendor -->
+    <script src="{% static 'assets/vendor/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js' %}"></script>
+    <script src="{% static 'assets/vendor/store2/store2.js' %}"></script>
+
+    <!-- Examples -->
+    <script src="{% static 'assets/javascripts/ui-elements/examples.portlets.js' %}"></script>
+
+{% endblock scripts %}

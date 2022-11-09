@@ -1,0 +1,33 @@
+{% extends 'base-public.html' %}
+{% load widget_tweaks %}
+{% load utils %}
+
+
+{% block content %}
+
+
+{% if respondeu %}
+<h2>Obrigado pela sua contribuição!</h2>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-group mb-lg">
+        <div class="clearfix">
+            <h3 class="pull-left">{{ survey.tittle }}</h3>
+        </div>
+        <br>
+        <div class="input-group mb-lg">
+            {{ form.options }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 text-right">
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">Responder</button>
+        </div>
+    </div>
+
+</form>
+{% endif %}
+{% endblock content %}

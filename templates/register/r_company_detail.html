@@ -1,0 +1,32 @@
+{% extends 'base-public.html' %}
+{% load static %}
+
+{% block content %}
+<form>
+<div class="col-md-12 div-center">
+  <section class="panel mt-30">
+		<div class="btn-holder">
+			<a href="{% url 'r_person_create' company.id %}" class="mb-xs mt-xs mr-xs btn btn-primary pull-right">
+				<i class="fa fa-plus"></i>
+				Participante
+			</a>
+		</div>
+		<div class="clear-right"></div>
+		<header class="panel-heading">
+			<h2 class="panel-title">{{company.corporate_name}}</h2>
+		</header>
+		<div style="padding:18px" class="panel-body">
+			<p>
+				{{ company.get_segmentation_display }}
+			</p>
+		</div>
+	</section>
+
+</div>
+</form>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'assets/vendor/jquery-maskedinput/jquery.maskedinput.js' %}"></script>
+{% endblock scripts %}

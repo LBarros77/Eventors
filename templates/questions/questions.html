@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.cs" />
+<style>
+    .custom-table-head {
+        background-color: transparent;
+    }
+
+    .custom-tr {
+        color: #777
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+
+<section class="panel">
+    <header class="panel-heading">
+        <h2 class="panel-title">Selecione o evento</h2>
+    </header>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table id="example" class="display table mb-none" style="width:100%">
+                <thead class="custom-table-head">
+                    <tr class="custom-tr">
+                        <th>Nome</th>
+                        <th>Data Ínicio</th>
+                        <th>Data Fim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'question_by_event' event.id %}">
+                                {{event.title}}
+                            </a>
+                        </td>
+                        <td>{{event.first_date | date:"d/m/Y"}}</td>
+                        <td>{{event.last_date | date:"d/m/Y"}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sProcessing": "A processar...",
+                "sLengthMenu": "Mostrar _MENU_ registos",
+                "sZeroRecords": "Não foram encontrados resultados",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+                "sInfoEmpty": "Mostrando de 0 até 0 de 0 registos",
+                "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+                "sInfoPostFix": "",
+                "sSearch": "Procurar:",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sPrevious": "Anterior",
+                    "sNext": "Seguinte",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            },
+            "lengthChange": false
+        });
+    });
+</script>
+
+
+{% endblock scripts %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<form action="{% url 'register' event.id company.id %}" method="POST">
+    {% csrf_token %}
+    <section class="panel mt-30">
+      <header class="panel-heading">
+        <h2 class="panel-title">{{ event.title }}</h2>
+      </header>
+      <div class="panel-body">
+        <div class="form-group mb-lg pd-20">
+            <label>Insira o CPF:</label>
+            <div class="input-group mb-md">
+                {{form.cpf | append_attr:"class: form-control"}}
+                {{ form.cpf.errors }}
+                <div class="input-group-btn">
+                    <button tabindex="-1" class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+</form>
+{% endblock content %}

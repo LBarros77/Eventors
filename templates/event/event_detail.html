@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.cs" />
+
+<style>
+	.custom-table-head {
+		background-color: transparent;
+	}
+
+	.custom-tr {
+		color: #777
+	}
+
+	.close {
+		color: #FFF;
+		opacity: .8;
+	}
+</style>
+{% endblock css %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-primary">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<strong>{{message}}</strong>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="col-md-12 div-center">
+	<section class="panel">
+		<div class="btn-holder">
+			<a class="mb-xs mt-xs mr-xs btn btn-primary pull-right"
+				href="{% url 'report_generator' event.id %}">Relatório</a>
+			<a class="mb-xs mt-xs mr-xs modal-basic btn btn-primary pull-right"
+				href="#modalHeaderColorSuccess">Check-In</a>
+			<div id="modalHeaderColorSuccess" class="modal-block modal-header-color modal-block-primary mfp-hide">
+				<section class="panel">
+					<header class="panel-heading">
+						<h2 class="panel-title">Check-In</h2>
+					</header>
+					<div class="panel-body">
+						<div class="modal-wrapper">
+							<div class="modal-text">
+								<h4>Leia o QR Code ou acesse pelo link abaixo</h4>
+								<br>
+								<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ request.get_host }}/app/checkin/{{ event.id }}"
+									alt="">
+
+								<p>
+									<br>
+									<a
+										href="http://{{ request.get_host }}/app/checkin/{{ event.id }}">{{ request.get_host }}/app/checkin/{{ event.id }}</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-12 text-right">
+								<button class="btn btn-primary modal-dismiss">OK</button>
+							</div>
+						</div>
+					</footer>
+				</section>
+			</div>
+			<a class="mb-xs mt-xs mr-xs btn btn-primary pull-right" href="{% url 'company_search' event.id %}">
+				<i class="fa fa-plus"></i>
+				Participante
+			</a>
+		</div>
+		<div class="clear-right"></div>
+		<header class="panel-heading">
+			<h2 class="panel-title">{{event.title}}</h2>
+		</header>
+		<div class="panel-body">
+			<p>{{event.description}}</p>
+		</div>
+	</section>
+	<section class="panel">
+		<header class="panel-heading">
+			<h2 class="panel-title">Participantes</h2>
+		</header>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table id="example" class="display table table-no-more table-striped mb-none" style="width:100%">
+					<thead class="custom-table-head">
+						<tr class="custom-tr">
+							<th class="text-left">Data de Inscrição</th>
+							<th class="text-left">Nome Completo</th>
+							<th class="text-left">CPF</th>
+							<th class="text-left">Cargo</th>
+							<th class="text-left">Empresa</th>
+							<th class="text-left">CNPJ</th>
+							<th class="text-left">Check-In</th>
+							<th class="text-left">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for register in registers %}
+						<tr>
+							<th class="text-left">{{register.created_at | date:"d/m/Y"}}</th>
+							<td class="text-left">{{register.person.name}}</td>
+							<td class="text-left">{{register.person.cpf}}</td>
+							<td class="text-left">{{register.person.role}}</td>
+							<td class="text-left">{{register.person.company.corporate_name}}</td>
+							<td class="text-left">{{register.person.company.cnpj}}</td>
+							{% if register.checked_in %}
+							<td class="text-center">
+								<i class="fa fa-check"></i>
+							</td>
+							{% else %}
+							<td class="text-center">
+								<i class="fa fa-times"></i>
+							</td>
+							{% endif %}
+							<td class="text-left">
+								{% if not register.approved %}
+								<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Aprovar">
+									<a href="{% url 'register_approve' register.id %}"
+										class="btn btn-success btn-sm waves-effect waves-light"><i
+											class="fa fa-check"></i>
+									</a>
+								</span>
+								{% else %}
+								<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Reprovar">
+									<a href="{% url 'register_approve' register.id %}"
+										class="btn btn-danger btn-sm waves-effect waves-light">
+										<i class="fa fa-times"></i>
+									</a>
+								</span>
+								{% endif %}
+								<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Credencial">
+									<a href="#" target="popup"
+										onclick="window.open('http://{{ request.get_host }}/event/{{ register.event.id }}/credential/{{ register.person.id }}', 'popup', 'width=600,height=250'); return false;"
+										class="btn-sm waves-effect waves-light  btn btn-info">
+										<!--<a class="btn-sm waves-effect waves-light  btn btn-info" target="_blank"
+										href="{% url 'credential_maker' register.event.id register.person.id %}"> -->
+										<i class="fa fa-id-badge"></i>
+									</a>
+								</span>
+								<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Excluir">
+									<a class="btn-sm waves-effect waves-light  modal-basic btn btn-danger"
+										href="#modalWarning-{{ register.id }}">
+										<i class="fa fa-trash"></i>
+									</a>
+								</span>
+								<div id="modalWarning-{{ register.id }}"
+									class="modal-header-color modal-block modal-block-danger mfp-hide">
+									<section class="panel">
+										<header class="panel-heading">
+											<h2 class="panel-title">Cuidado!</h2>
+										</header>
+										<div class="panel-body">
+											<div class="modal-wrapper">
+												<div class="modal-icon">
+													<i class="fa fa-trash"></i>
+												</div>
+												<div class="modal-text">
+													<h4>Exluir <span class="f-bold">{{ register.person.name }} no evento
+															{{ register.event.title }}?</span></h4>
+													<p>Uma vez exluído, todos os dados serão perdidos!</p>
+												</div>
+											</div>
+										</div>
+										<footer class="panel-footer">
+											<div class="row">
+												<div class="col-md-12 text-right">
+													<a href="{% url 'register_delete' register.id %}" type
+														class="btn btn-danger">Excluir</a>
+													<button class="btn btn-defaut modal-dismiss">Cancelar</button>
+												</div>
+											</div>
+										</footer>
+									</section>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/w/bs/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('#example').DataTable({
+			"language": {
+				"sEmptyTable": "Nenhum registro encontrado",
+				"sProcessing": "A processar...",
+				"sLengthMenu": "Mostrar _MENU_ registos",
+				"sZeroRecords": "Não foram encontrados resultados",
+				"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+				"sInfoEmpty": "Mostrando de 0 até 0 de 0 registos",
+				"sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+				"sInfoPostFix": "",
+				"sSearch": "Procurar:",
+				"oPaginate": {
+					"sFirst": "Primeiro",
+					"sPrevious": "Anterior",
+					"sNext": "Seguinte",
+					"sLast": "Último"
+				},
+				"oAria": {
+					"sSortAscending": ": Ordenar colunas de forma ascendente",
+					"sSortDescending": ": Ordenar colunas de forma descendente"
+				}
+			},
+			"lengthChange": false
+		});
+	});
+</script>
+<script src="{% static 'assets/vendor/magnific-popup/jquery.magnific-popup.js' %}"></script>
+<script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
+{% endblock scripts %}

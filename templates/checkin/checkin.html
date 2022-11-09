@@ -1,0 +1,27 @@
+{% extends 'base-public.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<form action="{% url 'checkin' event.id %}" method="POST">
+  {% csrf_token %}
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">{{ event.title }}</h2>
+    </header>
+    <div class="panel-body">
+      <div class="form-group mb-lg pd-20">
+        <label>Insira seu CPF:</label>
+        <div class="input-group input-group-icon">
+          {{form.cpf | append_attr:"class:input-lg"}}
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">
+          Check-In
+        </button>
+      </div>
+    </div>
+  </section>
+</form>
+{% endblock content %}

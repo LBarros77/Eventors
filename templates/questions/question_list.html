@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- start: page -->
+<div class="btn-holder">
+    <a href="{% url 'question_by_event' event.id %}" type="button" class="btn btn-primary btn-sm waves-effect waves-light">
+      <i class="fa fa-refresh"></i><b>Atualizar</b></a>
+    {% if questions.count > 0 %}
+    <a href="{% url 'question_clean' event.id %}" class="btn btn-danger btn-sm waves-effect waves-light"><i class="fa fa-trash"></i><b> Deletar Todos</a>
+    {% endif %}
+</div>
+
+<div class="row">
+
+{% for question in questions %}
+
+    <div class="col-md-4" data-plugin-portlet id="portlet-1">
+        {% if question.approve == False %}
+        <section class="panel panel-danger" id="panel-3" data-portlet-item>
+        {% else %}
+        <section class="panel panel-success" id="panel-3" data-portlet-item>
+        {% endif %}
+            <header class="panel-heading portlet-handler">
+                <h2 class="panel-title">{{question.name}}</h2>
+            </header>
+            <div class="panel-body">
+                {{question.question}}
+                <div class="mt-20">
+                    {% if question.approve %}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Reprovar">
+                        <a href="{% url 'question_approve' question.event.id question.id %}" class="btn btn-warning btn-sm waves-effect waves-light"><i class="fa fa-times"></i></a>
+                    </span>
+                    {% else %}  
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Aprovar">
+                        <a href="{% url 'question_approve' question.event.id question.id %}" class="btn btn-success btn-sm waves-effect waves-light"><i class="fa fa-check"></i></a>
+                    </span>
+                    {% endif %}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Excluir">
+                        <a class="btn-sm waves-effect waves-light  modal-basic btn btn-danger" href="#modalWarning-{{ question.id }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </span>			
+                    <div id="modalWarning-{{ question.id }}" class="modal-header-color modal-block modal-block-danger mfp-hide">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Ciudado!</h2>
+                            </header>
+                            <div class="panel-body">
+                                <div class="modal-wrapper">
+                                    <div class="modal-icon">
+                                        <i class="fa fa-trash"></i>
+                                    </div>
+                                    <div class="modal-text">
+                                        <h4>Exluir <span class="f-bold">{{ question.name }}?</span></h4>
+                                        <p>Uma vez exluído, todos os dados serão perdidos!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <a href="{% url 'question_delete' question.event.id question.id %}" type class="btn btn-danger">Excluir</a>
+                                        <button class="btn btn-defaut modal-dismiss">Cancelar</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+
+    <!-- Specific Page Vendor -->
+    <script src="{% static 'assets/vendor/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js' %}"></script>
+    <script src="{% static 'assets/vendor/store2/store2.js' %}"></script>
+
+    <!-- Examples -->
+    <script src="{% static 'assets/javascripts/ui-elements/examples.portlets.js' %}"></script>
+    <script src="{% static 'assets/javascripts/ui-elements/examples.modals.js' %}"></script>
+
+{% endblock scripts %}

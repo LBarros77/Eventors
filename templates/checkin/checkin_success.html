@@ -1,0 +1,17 @@
+{% extends 'base-public.html' %}
+{% load static %}
+{% block content %}
+<form>
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">{{ event.title }}</h2>
+    </header>
+    <div class="panel-body">
+      <h3>O Check-In foi realizado com sucesso!</h3>
+    </div>
+  </section>
+</form>
+{% endblock content %}

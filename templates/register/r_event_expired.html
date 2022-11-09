@@ -1,0 +1,14 @@
+{% extends 'base-public.html' %}
+{% load static %}
+{% block content %}
+<form>
+<section class="panel mt-30">
+  <header class="panel-heading">
+    <h2 class="panel-title">{{ event.title }}</h2>
+  </header>
+  <div class="panel-body">
+    <h3>Não é possível criar um comentário/pergunta para este evento, pois o mesmo já foi finalizado.</h3>
+  </div>
+</section>
+</form>
+{% endblock content %}

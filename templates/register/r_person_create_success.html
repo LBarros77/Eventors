@@ -1,0 +1,17 @@
+{% extends 'base-public.html' %}
+{% load static %}
+{% block content %}
+<form>
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+    </div>
+    <header class="panel-heading"> 
+      <h2 class="panel-title">{{event.title}} - {{ event.first_date | date:"d/m/Y" }}</h2>
+    </header>
+    <div class="panel-body">
+      <h4>Solicitação de inscrição realizada com sucesso!<br>Você receberá um e-mail com a confirmação.</h4>
+    </div>
+  </section>
+</form>
+{% endblock content %}

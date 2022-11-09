@@ -1,0 +1,27 @@
+{% extends 'base-public.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .logo-personalizada {
+    width: 50%;
+    margin: auto;
+    margin-bottom: auto;
+    display: block;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+</style>
+<form>
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <img src="{% static 'assets/images/logo.png' %}" style="width:100%;"  alt="EXPOCIGRA" />
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">Inscrição realizado com sucesso!</h2>
+    </header>
+    <div class="panel-body">
+      <h3>Sua inscrição no evento {{ event.title }}, foi realizada com sucesso!</h3>
+    </div>
+  </section>
+</form>
+{% endblock content %}

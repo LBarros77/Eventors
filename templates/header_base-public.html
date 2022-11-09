@@ -1,0 +1,149 @@
+{% load static i18n %}
+<!doctype html>
+<html class="fixed sidebar-left-collapsed">
+
+<head>
+	<!-- Basic -->
+	<meta charset="UTF-8">
+	<title>EXPOCIGRA</title>
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- Web Fonts  -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light"
+		rel="stylesheet" type="text/css">
+	<!-- Vendor CSS -->
+	<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
+	<link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.css' %}" />
+	<link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
+	<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css' %}" />
+	{% block css %} {% endblock css %}
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="{% static 'assets/stylesheets/theme.css' %}" />
+	<!-- Skin CSS -->
+	<link rel="stylesheet" href="{% static 'assets/stylesheets/skins/default.css' %}" />
+	<!-- Head Libs -->
+
+
+</head>
+
+<body>
+	<style>
+		.logo-container {
+			width: 10vw;
+			margin: auto;
+			display: block;
+		}
+
+		.pd-20 {
+			padding: 20px
+		}
+
+		.body-sign {
+			display: block;
+		}
+
+		form {
+			padding-top: 25vh;
+		}
+
+		.header .logo-container {
+			text-align: center;
+			margin: auto;
+		}
+
+		/* Extra small devices (phones, 600px and down) */
+		@media only screen and (max-width: 600px) {
+			.header .logo-container {
+				width: 30vw
+			}
+
+			.body-sign .panel-sign .panel-body {
+				padding: 33px 0px 15px;
+			}
+
+			.h100vh {
+				height: 70vh
+			}
+
+			.header {
+				position: fixed;
+			}
+
+			.body-sign .center-sign {
+				display: block;
+				padding-top: 30vh
+			}
+
+			.panel {
+				margin-bottom: 0
+			}
+		}
+
+		.panel {
+			margin-bottom: 2rem
+		}
+
+		/* Small devices (portrait tablets and large phones, 600px and up) */
+		@media only screen and (min-width: 600px) {
+			.header .logo-container {
+				width: 35vw;
+				left: unset;
+				right: unset;
+				position: unset;
+				margin: auto;
+				display: block;
+			}
+
+		}
+
+		/* Medium devices (landscape tablets, 768px and up) */
+		@media only screen and (min-width: 768px) {
+			.header .logo {
+				margin: 10px 0 0 0px;
+			}
+
+		}
+
+		/* Large devices (laptops/desktops, 992px and up) */
+		@media only screen and (min-width: 992px) {}
+	</style>
+	<section class="body">
+		<header class="header">
+			<div class="logo-container">
+				<div class="logo">
+					<img src="{% static 'assets/images/logo-light.png' %}" style="width:100%" width="75" height="35" alt="Porto Admin" />
+
+				</div>
+			</div>
+		</header>
+		<section class="body-sign">
+			{% block content %}
+			{% endblock content %}
+		</section>
+
+		<!-- end: page -->
+
+		<!-- Vendor -->
+		<script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
+		<script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js' %}"></script>
+		<script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+		<script src="{% static 'assets/vendor/magnific-popup/jquery.magnific-popup.js' %}"></script>
+		<script src="{% static 'assets/vendor/jquery-placeholder/jquery-placeholder.js' %}"></script>
+
+		<!-- Theme Base, Components and Settings -->
+
+
+		<!-- Theme Custom -->
+		<script src="{% static 'assets/vendor/modernizr/modernizr.js' %}"></script>
+		<script src="{% static 'assets/vendor/jquery-maskedinput/jquery.maskedinput.js' %}"></script>
+		<script src="{% static 'assets/javascripts/theme.custom.js' %}"></script>
+
+		<!-- Theme Initialization Files -->
+		{% block scripts %}
+		{% endblock scripts %}
+
+</body>
+
+</html>

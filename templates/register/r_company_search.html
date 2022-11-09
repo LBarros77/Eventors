@@ -1,0 +1,71 @@
+{% extends 'base-public.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<style>
+   img {
+      width: 10%;
+   }
+</style>
+<form method="GET" action="{% url 'r_company_search' event.id %}">
+  {% csrf_token %}
+  <section class="panel mt-30">
+    <div class="logo-personalizada">
+      <a href="{% url 'r_company_search' event.id %}">
+        <img src="{% static 'assets/images/logo.png' %}" style="width:100%;" alt="Porto Admin" />
+      </a>
+    </div>
+    <header class="panel-heading">
+      <h2 class="panel-title">{{event.title}} - {{ event.first_date | date:"d/m/Y" }}</h2>
+    </header>
+    <div class="panel-body">
+      <div class="form-group mb-lg pd-20">
+        <label>Insira o CNPJ da sua empresa:</label>
+        <div class="input-group input-group-icon">
+          <input id="id_cnpj" name="cnpj" type="text" placeholder="Apenas Números" class="form-control input-lg" />
+          {{ form.cnpj.errors }}
+        </div>
+        <div class="table-responsive mt-20">
+          <table class="table table-bordered table-striped table-condensed mb-none">
+            <tbody>
+
+              {% if cfilter.qs.count != num_results %}
+              {% for company in cfilter.qs %}
+              <tr>
+                <td>
+                  <span class=" mb-xs mt-xs mr-xs company-link pull-left">
+                    {{company.corporate_name}}
+                  </span>
+                  <a class="mb-xs mt-xs mr-xs btn btn-sm btn-primary pull-right"
+                    href="{% url 'r_register' event.id company.id %}">
+                    Selecionar
+                  </a>
+                </td>
+                <div class="clear-right"></div>
+              </tr>
+              {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        {% if cfilter.qs.count == 0 %}
+        <div class="alert-box failure">Não houve resultados para sua pesquisa.</div>
+        <a href="{% url 'r_company_create' event.id %}" class="btn btn-primary btn-block btn-lg mt-lg">
+          Cadastrar empresa
+        </a>
+        {% endif %}
+        {% if cfilter.qs.count == num_results %}
+        <button type="submit" class="btn btn-primary btn-block btn-lg mt-lg">
+          Pesquisar
+        </button>
+        {% else %}
+        <a href="{% url 'r_company_search' event.id %}" type="submit" class="btn  mt-lg btn-block">
+          Pesquisar outro CNPJ
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</form>
+{% endblock %}
