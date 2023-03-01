@@ -61,7 +61,6 @@ def register_delete(request, id_register):
     return redirect(event_detail, id_event=event.id)
 
 
-
 def company_search(request, id_event):
     event = Event.objects.get(id=id_event)
     cfilter = CompanyFilter(
@@ -110,8 +109,11 @@ def register(request, id_event, id_company):
 # Question Views
 @login_required
 def question_list(request):
-    events = Event.objects.all()
-    return render(request, 'questions/questions.html', {'events': events})
+    try:
+        events = Event.objects.all()
+        return render(request, 'questions/questions.html', {'events': events})
+    except:
+        return render(request, 'base.html')
 
 @login_required
 def question_by_event(request, id_event):
@@ -140,8 +142,11 @@ def question_delete(request, id_event, id_question):
 
 @login_required
 def question_approved(request):
-    events = Event.objects.all()
-    return render(request, 'questions/question_approved.html', {'events': events})    
+    try:
+        events = Event.objects.all()
+        return render(request, 'questions/question_approved.html', {'events': events})
+    except:
+        return render(request, 'base.html')
 
 @login_required
 def question_approved_by_event(request, id_event):
@@ -178,12 +183,13 @@ def company_approve(request, id):
 
 @login_required
 def company_list(request):
-    cfilter = CompanyFilter(
-        request.GET, queryset=Company.objects.all())
-    data = {
-        'cfilter': cfilter
-    }
-    return render(request, 'company/company_list.html', data)
+    try:
+        cfilter = CompanyFilter(
+            request.GET, queryset=Company.objects.all())
+        data = {'cfilter': cfilter}
+        return render(request, 'company/company_list.html', data)
+    except:
+        return redirect('company_create')
 
 @login_required
 def company_detail(request, id):
@@ -217,11 +223,14 @@ def company_delete(request, id):
 # Person
 @login_required
 def person_list(request):
-    persons = Person.objects.all()
-    data = {
-        'persons': persons
-    }
-    return render(request, 'person/person_list.html', data)
+    try:
+        persons = Person.objects.all()
+        data = {
+            'persons': persons
+        }
+        return render(request, 'person/person_list.html', data)
+    except:
+        return('person_create')
 
 @login_required
 def person_create(request, id_company):
@@ -286,11 +295,12 @@ def person_delete(request, id):
 # Event
 @login_required
 def event_list(request):
-    events = Event.objects.all()
-    data = {
-        'events': events
-    }
-    return render(request, 'event/event_list.html', data)
+    try:
+        events = Event.objects.all()
+        data = {'events': events}
+        return render(request, 'event/event_list.html', data)
+    except:
+        return redirect('event_create')
 
 @login_required
 def event_create(request):
@@ -335,8 +345,11 @@ def event_delete(request, id):
 #Sorteio
 @login_required
 def raffle_event_list(request):
-    events = Event.objects.all()
-    return render(request, 'raffle/raffle.html', {'events': events})
+    try:
+        events = Event.objects.all()
+        return render(request, 'raffle/raffle.html', {'events': events})
+    except:
+        return render(request, 'base.html')
 
 @login_required
 def raffle_prepare(request, id_event):

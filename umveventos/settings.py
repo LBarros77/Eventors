@@ -1,12 +1,13 @@
 import os
+from decouple import config, Csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'nux-4vko2*7qm8&%r6mwlucqs3eo8+llcl@r3z29wr=-p(e2&9'
+SECRET_KEY = config(SECRET_KEY)
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['104.248.9.242', '127.0.0.1', '165.227.79.63','expocigrabackoffice.appdoevento.com.br']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='0.0.0.0', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,10 +23,11 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     # 'django-advanced-filters',
-    'system',
     'six',
     'widget_tweaks',
     'qrcode',
+
+    'system',
 ]
 
 SITE_ID = 1
@@ -65,10 +67,10 @@ WSGI_APPLICATION = 'umveventos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'umveventos',
-        'USER': 'appdoevento',
-        'PASSWORD': 'sRrGncYyB$',
-        'HOST': 'localhost',
+        'NAME': 'appevent',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -110,13 +112,13 @@ STATICFILES_DIRS = [
 
 ACCOUNT_ADAPTER = 'system.adapter.AccountAdapter'
 
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 EMAIL_USE_SSL = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'mail.wcore.com.br'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'umv@appdoevento.com.br'
-EMAIL_HOST_PASSWORD = 'Wcore32101234'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGGING = {

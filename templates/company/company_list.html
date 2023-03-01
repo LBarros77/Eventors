@@ -58,7 +58,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for company in cfilter.qs%}
+						{% for company in cfilter.qs %}
 						<tr>
 							<td><a href="{% url 'company_detail' company.id %}">{{company.corporate_name}}</a></td>
 							<td>{{company.cnpj}}</td>
