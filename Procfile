@@ -1,0 +1,1 @@
+web: gunicorn umveventos.wsgi --log-file -
