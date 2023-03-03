@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
+ALLOWED_HOSTS = '.vercel.app' #config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,8 +66,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'umveventos.wsgi.app'
 
-if not DEFAULT_DATABASE_URL:
-    DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+#if not DEFAULT_DATABASE_URL:
+DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
     'default': config('DATABASE_URL', default=DEFAULT_DATABASE_URL, cast=dburl),
