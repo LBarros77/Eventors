@@ -1,6 +1,6 @@
 import os
 from decouple import config, Csv
-import dj_database_url
+from dj_database_url import parse as dburl
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,18 +66,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'umveventos.wsgi.application'
 
+if not DEFAULT_DATABASE_URL:
+    DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600),
+    'default': config('DATABASE_URL', default=DEFAULT_DATABASE_URL, cast=dburl),
 }
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'appevent',
-#         'USER': 'postgres',
-#         'PASSWORD': 'password',
-#         'HOST': 'db',
-#         'PORT': '5432',
-#     }
+#     'default': dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600),
 # }
 
 AUTH_PASSWORD_VALIDATORS = [
