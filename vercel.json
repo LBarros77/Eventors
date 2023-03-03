@@ -1,12 +1,13 @@
 {
-  "builds": [{
-	"src": "umveventos/wsgi.py",
-	"use": "@vercel/python",
-	"config": {"maxLammbsaSize": "15mb", "runtime": "python3.7"}
-  }],
-  "routes": [
-	{
-	  "src": "/(.*)",
-	  "dest": "umveventos/wsgi.py"
-	}
-  ]
+	"builds": [{
+		"src": "umveventos/wsgi.py",
+		"use": "@vercel/python",
+		"config": {"maxLambdaSize": "15mb", "runtime": "python3.7"}
+  	}],
+  	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "umveventos/wsgi.py"
+		}
+  	]
+}
