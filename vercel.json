@@ -1,13 +1,26 @@
 {
-	"builds": [{
+	"builds": [
+		{
 		"src": "umveventos/wsgi.py",
 		"use": "@vercel/python",
 		"config": {"maxLambdaSize": "50mb", "runtime": "python3.7"}
-  	}],
+		},
+		{
+			"src": "build.sh",
+			"use": "@vercel/static-build",
+			"config": {
+				"distDir": "staticfiles"
+			}
+		}
+	],
   	"routes": [
 		{
 			"src": "/(.*)",
 			"dest": "umveventos/wsgi.py"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/static/$1"
 		}
   	]
 }
