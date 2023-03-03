@@ -64,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'umveventos.wsgi.application'
+WSGI_APPLICATION = 'umveventos.wsgi.app'
 
 if not DEFAULT_DATABASE_URL:
     DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
