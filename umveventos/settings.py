@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = '.vercel.app' #config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
+ALLOWED_HOSTS = '*' #config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -110,6 +110,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ACCOUNT_ADAPTER = 'system.adapter.AccountAdapter'
 
