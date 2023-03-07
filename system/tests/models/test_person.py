@@ -27,19 +27,32 @@ OPT_IN = random.choice(OPT_IN_CHOICES)
 
 class PersonTestCase(TestCase):
 	def setUp(self):
-		self.name = NAME
-		self.name_cracha = NAME_CRACHA
-		self.category = CATEGORY
-		self.cell_phone = CELL_PHONE
-		self.cpf = CPF
-		self.email = EMAIL
-		self.phone = PHONE
-		self.role = ROLE
-		self.company = COMPANY
-		self.opt_in = OPT_IN
+		self.person = Person.objects.create(
+			name = NAME,
+			name_cracha = NAME_CRACHA,
+			category = CATEGORY,
+			cell_phone = CELL_PHONE,
+			cpf = CPF,
+			email = EMAIL,
+			phone = PHONE,
+			role = ROLE,
+			company = COMPANY,
+			opt_in = OPT_IN
+		)
 
-	def test_get_person(self):
-		#
+	def test_name_person(self):
+		self.assertEquals(self.person.name, NAME)
+	
+	def test_name_cracha_person(self):
+		self.assertEquals(self.person.name_cracha, NAME_CRACHA)
+
+	def test_category_person(self):
+		for category in CATEGORY_CHOICES:
+			if self.category == category:
+				self.assertEquals(self.person.category, self.category)
+
+	def test_cell_phone_company(self):
+		# Identify...
 
 	def test_str_person(self):
 		self.assertEquals(str(self.name), Person.objects.get(name=self.name))

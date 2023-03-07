@@ -14,7 +14,7 @@ SEGMENTATION_CHOICES = (
 
 class CompanyTestCase(TestCase):
 	def setUp(self):
-		Company.objects.create(
+		self.company = Company.objects.create(
 			company_name="Company A",
 			corporate_name="Company Test",
 			fantasy_name="Test",
@@ -31,23 +31,6 @@ class CompanyTestCase(TestCase):
 			segmentation=random.choice(SEGMENTATION_CHOICES),
 			approved=True
 		)
-		Company.objects.create(
-			company_name="Company B",
-			corporate_name="Company Test 2",
-			fantasy_name="Test 2",
-			cnpj="",
-			position="Admin",
-			cep="",
-			public_place="",
-			complement="House",
-			neighborhood="neighborhood",
-			city="Manchester City",
-			state="NY",
-			number=38,
-			phone="349925476324",
-			segmentation=random.choice(SEGMENTATION_CHOICES),
-			approved=True
-		)
 
-	def test_company_is_approved(self):
-		#
+	def test_company_name_company(self):
+		self.assertEquals(self.company.company_name, 'Company A')
