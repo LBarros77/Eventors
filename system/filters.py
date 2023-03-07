@@ -1,5 +1,5 @@
 import django_filters
-from system.models import Company
+from system.models.company import Company
 
 
 class CompanyFilter(django_filters.FilterSet):

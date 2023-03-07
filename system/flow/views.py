@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
-from system.models import Event, Person, Register, Company, CheckIn
+from system.models.event import Event
+from system.models.person import Person
+from system.models.register import Register
+from system.models.company import Company
+from system.models.check_in import CheckIn
 from system.forms import CompanyForm, PersonForm, QuestionForm, CnpjForm, CpfForm
 from system.filters import CompanyFilter
 from datetime import date

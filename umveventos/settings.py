@@ -1,6 +1,6 @@
 import os
 from decouple import config, Csv
-from dj_database_url import parse as dburl
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = '*' #config('ALLOWED_HOSTS', default='.vercel.app', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,7 +35,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,17 +64,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'umveventos.wsgi.application'
-
-#if not DEFAULT_DATABASE_URL:
-DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+# WSGI_APPLICATION = 'umveventos.wsgi.application'
 
 DATABASES = {
-    'default': config('DATABASE_URL', default=DEFAULT_DATABASE_URL, cast=dburl),
+    'default': dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600),
 }
-# DATABASES = {
-#     'default': dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600),
-# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -111,7 +105,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ACCOUNT_ADAPTER = 'system.adapter.AccountAdapter'
 

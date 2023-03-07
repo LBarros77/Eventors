@@ -1,5 +1,8 @@
 from django import forms
-from .models import (Question, Person, Company, Event)
+from system.models.question import Question
+from system.models.person import Person
+from system.models.company import Company
+from system.models.event import Event
 
 
 class QuestionForm(forms.ModelForm):

@@ -3,3 +3,12 @@ docker*
 
 .idea
 .git
+
+.env.*
+build.sh
+docker*
+Procfile
+pyproject.toml
+render
+requirements_orig.txt
+vercel.json

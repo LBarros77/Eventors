@@ -1,31 +1,47 @@
 from django.urls import path
-from system.views import (
+from system.views.views import (
     home,
-    # Questions
+    # Credencial
+    credential_maker,
+    # Report
+    report_generator,
+)
+
+from system.views.question import (
     question_list,
     question_by_event,
     question_approve,
     question_approved_by_event,
     question_delete,
     question_approved,
-    question_clean,    
-    # Company
-    company_create, company_list, company_update, company_detail, company_delete, company_approve,
-    company_search,
-    # Person
-    person_list, person_create, person_create_and_register, person_update, person_delete,
-    # Event
-    event_list, event_create, event_update, event_delete, event_detail,
-    # Raffle
-    raffle_prepare, raffle_event_list, raffle_maker, raffle_delete,
-    #Register
-    register, register_approve, register_delete, 
-    #Credencial
-    credential_maker,
-    #Report
-    report_generator,
+    question_clean,
 )
 
+from system.views.company import (
+    company_create,
+    company_list,
+    company_update,
+    company_detail,
+    company_delete,
+    company_approve,
+    company_search,
+)
+
+from system.views.person import (
+    person_list, person_create, person_create_and_register, person_update, person_delete,
+)
+
+from system.views.event import (
+    event_list, event_create, event_update, event_delete, event_detail,
+)
+
+from system.views.register import (
+    register, register_approve, register_delete,
+)
+
+from system.views.reffle import (
+    raffle_prepare, raffle_event_list, raffle_maker, raffle_delete,
+)
 
 urlpatterns = [
     # Home
