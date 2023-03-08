@@ -1,6 +1,6 @@
 # AppEvents
 
-Sistema Integrado de Gestão Eventos baseado em Django
+Sistema Integrado de Gestão de Eventos baseado em Django
 
 Projeto desenvolvido em Python 3 no Windows, testado no GNU/Linux e Windows.
 
@@ -56,7 +56,7 @@ python manage.py runserver
 
 ## Créditos
 
-- [Leonardo Barros](https://github.com/gurayyarar/AdminBSBMaterialDesign)
+- [Leonardo Barros](https://github.com/LBarros77)
 - [Themesberg][https://demo.themesberg.com/]
 
 ## Ajuda
