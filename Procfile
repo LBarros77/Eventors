@@ -1,1 +1,1 @@
-web: gunicorn umveventos.wsgi --log-file -
+web: gunicorn appevents.wsgi --log-file -

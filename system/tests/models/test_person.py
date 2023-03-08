@@ -52,7 +52,14 @@ class PersonTestCase(TestCase):
 				self.assertEquals(self.person.category, self.category)
 
 	def test_cell_phone_company(self):
-		# Identify...
+		cell_phone = self.person.cell_phone
+		self.assertEquals(Number(cell_phone), True)
+		cell_phone_len = num if len(cell_phone) > 6 and len(cell_phone) < 18 else 0
+		self.assertEquals(len(cell_phone), cell_phone_len)
+
+	def test_cpf_person(self):
+		self.assertEquals(Number(cell_phone), True)
+		self.assertEquals(len(self.person.cpf), 11)
 
 	def test_str_person(self):
 		self.assertEquals(str(self.name), Person.objects.get(name=self.name))

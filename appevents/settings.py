@@ -44,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'umveventos.urls'
+ROOT_URLCONF = 'appevents.urls'
 
 TEMPLATES = [
     {
@@ -64,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'umveventos.wsgi.application'
+# WSGI_APPLICATION = 'appevents.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600),

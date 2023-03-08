@@ -1,7 +1,7 @@
 {
 	"builds": [
 		{
-			"src": "umveventos/wsgi.py",
+			"src": "appevents/wsgi.py",
 			"use": "@vercel/python",
 			"config": {"maxLambdaSize": "50mb", "runtime": "python3.7"}
 		},
@@ -16,7 +16,7 @@
   	"routes": [
 		{
 			"src": "/(.*)",
-			"dest": "umveventos/wsgi.py"
+			"dest": "appevents/wsgi.py"
 		},
 		{
 			"src": "/(.*)",
