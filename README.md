@@ -39,6 +39,15 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+## Instalação (Alternativa)
+1. Gere um `.env` local
+
+2. Use o Docker compose
+
+```bash
+docker compose up --build
+```
+
 ## Implementações
 
 - Cadastro de clientes e empresas
@@ -56,7 +65,7 @@ python manage.py runserver
 
 ## Créditos
 
-- [Leonardo Barros](https://github.com/LBarros77)
+- [Leonardo Barros][https://github.com/LBarros77]
 - [Themesberg][https://demo.themesberg.com/]
 
 ## Ajuda

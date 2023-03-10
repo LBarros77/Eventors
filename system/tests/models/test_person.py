@@ -33,10 +33,10 @@ class PersonTestCase(TestCase):
 			name_cracha = 'Test Cracha',
 			category = random.choice(CATEGORY_CHOICES),
 			cell_phone = '869923356312',
-			cpf = '23467532408',
+			cpf = '52998224725',
 			email = 'test@company.com',
 			phone = '43284325',
-			role = 'role',
+			role = 'Rol',
 			company = 'Company Test',
 			opt_in = random.choice(OPT_IN_CHOICES)
 		)
@@ -52,7 +52,7 @@ class PersonTestCase(TestCase):
 			if self.category == category:
 				self.assertEquals(self.person.category, self.category)
 
-	def test_cell_phone_company(self):
+	def test_cell_phone_person(self):
 		cell_phone = self.person.cell_phone
 		if len(cell_phone) >= 8 and len(cell_phone) <= 11:
 			size = len(cell_phone)
@@ -66,16 +66,45 @@ class PersonTestCase(TestCase):
 		self.assertEquals(is_valid, True)
 
 	def test_cpf_person(self):
-		self.assertEquals(int(cell_phone), True)
-		self.assertEquals(len(self.person.cpf), 11)
+		cpf = self.person.cpf
+		digits['first_digit'] = cpf[:-2] if len(cpf) == 11 else 0
+		digits['second_digit'] = cpf[:-1] if len(cpf) == 11 else 0
+		is_valid = digits.first_digit != 0 and digits.second_digit != 0
+		for i = 0; i < 8; i++:
+			for int[number] in digit.second_digit:
+				if number == i:
+					count++
+					if count == 6:
+						is_valid = False
+						break
+				count = 0
+		if is_valid:
+			for digit in digits.values():
+				verify_first_digit = 0
+				count = len(digit)
+				for int(number) in digit:
+					verify_first_digit += number * count
+					count--
+				verify_first_digit = (verify_first_digit * 10) % 11
+				if len(digit) == 9 and verify_first_digit == cpf[9]:
+					is_valid = True
+				is_valid = is_valid and len(digit) == 10 and verify_first_digit == cpf[10]
+		self.assertBoolean(is_valid)
 
 	def test_email_person(self):
-		#
+		email = self.person.email
+		is_valid = '.com' in email[email.find('@'):]
+		self.assertBoolean(is_valid, True)
 
-	def test_phone_company(self):
+	def test_role_person(self):
+		self.assertEquals(str(self.person.role), 'Rol')
+
+	def test_phone_person(self):
 		first_number = int(self.person.phone[0])
-		self.assertBoolean(first_number > 1 and first_number < 6)
 		self.assertEquals(len(self.person.phone), 8 or 10)
+		self.assertBoolean(first_number > 1 and first_number < 6)
+		self.assertBoolean(int(self.person.phone[:3]) in TELEPHONE_PREFIXES)
 
-	def test_str_person(self):
-		self.assertEquals(str(self.name), Person.objects.get(name=self.name))
+	def test_opt_in_person(self):
+		is_valid = ('Sim' or 'Não') in self.person.opt_in
+		self.assertBoolean(is_valid, True)
