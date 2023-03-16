@@ -1,8 +1,8 @@
-# AppEvents
+# Eventors
 
 Sistema Integrado de Gestão de Eventos baseado em Django
 
-Projeto desenvolvido em Python 3 no Windows, testado no GNU/Linux e Windows.
+Projeto desenvolvido em Python 3 no GNU/Linux.
 
 ## Instalação:
 
@@ -59,9 +59,12 @@ docker compose up --build
 
 ## Tarefas para serem feitas
 
+- Organização de views/views.py
 - Testes para as models
 - Testes para as views
 - Testes para os forms
+- Customização de templa html do E-mail
+- Organização de HTML e CSS
 
 ## Créditos
 

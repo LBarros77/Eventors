@@ -3,10 +3,10 @@ version: '3'
 services:
   app:
     build: .
-    container_name: appevent
+    container_name: eventors
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/home/django/appevent
+      - .:/home/django/eventors
     ports:
       - "8000:8000"
     depends_on:
@@ -14,14 +14,15 @@ services:
 
   db:
     image: postgres
-    container_name: appevent-db
+    container_name: eventors-db
     tty: true
+    env_file: .env
     environment:
-      - POSTGRES_DB=appevent
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=$PSG_DB
+      - POSTGRES_USER=$PSG_USER
+      - POSTGRES_PASSWORD=$PSG_PASSWORD
     volumes:
-      - appevent-pgdata:/var/lib/postgresql/data
+      - eventors-pgdata:/var/lib/postgresql/data
 
   # pgadmin:
   #   image: dpage/pgadmin4
@@ -34,5 +35,5 @@ services:
   #     - "9000:80"
 
 volumes:
-  appevent-pgdata:
+  eventors-pgdata:
     external: true

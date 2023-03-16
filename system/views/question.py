@@ -5,6 +5,20 @@ from system.models.event import Event
 
 
 @login_required
+def question_create(request, id):
+    event = Event.objects.get(id=id)
+    current_day = date.today()
+    form = QuestionForm(request.POST or None)
+    if current_day > event.last_date:
+        return render(request, 'register/r_event_expired.html', {'event': event }) 
+    if form.is_valid():    
+        instance = form.save(commit=False)
+        instance.event = event
+        instance.save()
+        return render(request, 'questions/question_success.html', {'event': event})
+    return render(request, 'questions/question_create.html', {'form': form, 'event': event })
+
+@login_required
 def question_list(request):
     try:
         events = Event.objects.all()

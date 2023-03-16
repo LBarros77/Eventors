@@ -5,9 +5,16 @@ from system.views.views import (
     credential_maker,
     # Report
     report_generator,
+    # Register
+    r_register,
+    # Register People
+    r_person_create,
+    # Check In
+    checkin
 )
 
 from system.views.question import (
+    question_create,
     question_list,
     question_by_event,
     question_approve,
@@ -28,7 +35,7 @@ from system.views.company import (
 )
 
 from system.views.person import (
-    person_list, person_create, person_create_and_register, person_update, person_delete,
+    person_list,person_create, person_create_and_register, person_update, person_delete,
 )
 
 from system.views.event import (
@@ -41,6 +48,10 @@ from system.views.register import (
 
 from system.views.reffle import (
     raffle_prepare, raffle_event_list, raffle_maker, raffle_delete,
+)
+
+from system.views.r_company import (
+    r_company_create, r_company_detail, r_company_search
 )
 
 urlpatterns = [
@@ -98,4 +109,14 @@ urlpatterns = [
     #Report
     path('event/<int:id_event>/report/', report_generator, name="report_generator"),
     
+]
+
+urlpatterns += [
+    path('register/<int:id_event>/', r_company_search, name='r_company_search'),
+    path('register/<int:id_event>/person/<int:id_company>', r_register, name='r_register'),
+    path("question/create/<int:id>", question_create, name="question_create"),
+    path('companies/<int:id>/', r_company_detail, name='r_company_detail'),
+    path('company/create/<int:id_event>/', r_company_create, name='r_company_create'),
+    path('company/person/create/<int:id_event>', r_person_create, name='r_person_create'),
+    path('checkin/<int:id>/', checkin, name='checkin')
 ]

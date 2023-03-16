@@ -25,7 +25,7 @@
         </div>
         <div class="msg-error"></div>
         <header class="panel-heading bg-primary">
-            <h2 class="panel-title">{{event.title}} - {{ event.first_date | date:"d/m/Y" }}</h2>
+            <h2 class="panel-title">{{ event.title }} - {{ event.first_date | date:"d/m/Y" }}</h2>
         </header>
         <div class="panel-body">
             <div class="form-group mb-lg pd-20">
@@ -50,7 +50,7 @@
                             <tr>
                                 <td>
                                 <span class=" mb-xs mt-xs mr-xs company-link pull-left">
-                                    {{company.corporate_name}}
+                                    {{ company.corporate_name }}
                                 </span>
                                 <a class="mb-xs mt-xs mr-xs btn btn-sm btn-primary pull-right"
                                     href="{% url 'r_register' event.id company.id %}">
